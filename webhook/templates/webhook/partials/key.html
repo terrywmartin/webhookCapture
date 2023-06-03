@@ -7,4 +7,5 @@
     <div class="input-group has-validation">
         <input type="text" name="endpoint" class="form-control" id="endpoint" readonly="readonly" value="{% if settings.DEBUG == 1 %}http{% else %}https{% endif %}://{{settings.APP_URL}}{% url 'api:capture' key %}" >
     </div>
+    <button type="button" data-copy-text="URL" class="btn btn-success btn-block mt-2 copy-btn" >Copy URL to clipboard</button>
 </div>
