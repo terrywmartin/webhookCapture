@@ -5,6 +5,6 @@
     </div>
     <label for="formInput" class="form-label">Endpoint URL</label>
     <div class="input-group has-validation">
-        <input type="text" name="endpoint" class="form-control" id="endpoint" readonly="readonly" value="http://{{settings.APP_URL}}{% url 'api:capture' key %}" >
+        <input type="text" name="endpoint" class="form-control" id="endpoint" readonly="readonly" value="{% if settings.DEBUG == 1 %}http{% else %}https{% endif %}://{{settings.APP_URL}}{% url 'api:capture' key %}" >
     </div>
 </div>
