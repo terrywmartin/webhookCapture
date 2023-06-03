@@ -1,0 +1,20 @@
+<li class="nav-item">
+    <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bx bx-code-curly"></i><span>Webhooks</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li>
+            {% url 'webhook:view_webhooks' as webhooks_url %}
+            <a href="{% url 'webhook:view_webhooks' %}" class="{% if request.get_full_path == webhooks_url %}active{% endif %}">
+              <i class="bi bi-circle"></i><span>Home</span>
+            </a>
+        </li>
+        {% for a_webhook in all_webhooks %}
+         <li>
+            <a href="{% url 'webhook:view_webhook' a_webhook.key %}" class="{% if key == a_webhook.key %}active{% endif %}">
+              <i class="bi bi-circle"></i><span>{{a_webhook.name}}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</li><!-- End Forms Nav -->

@@ -1,0 +1,54 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+
+    <section class="section profile">
+    <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-4">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-12 col-md-12">
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Webhooks</h5>
+
+                  <div class="d-flex align-items-center" id="webhooks" hx-target="#webhooks" hx-get="{% url 'webhook:get_payloads' key %}" hx-trigger="every 10s" hx-swap="innerHTML">
+                   {% include 'webhook/partials/payloads.html' with payloads=payloads%}
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+           
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-8">
+
+          <!-- Recent Activity -->
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title">Data</h5>
+
+              <div class="activity" id="data">
+                </div><!-- End activity item-->
+
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+
+        </div><!-- End Right side columns -->
+
+      </div>    
+   
+
+    </secton>
+{% endblock %}

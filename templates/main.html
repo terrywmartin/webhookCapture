@@ -1,0 +1,31 @@
+{% load static i18n %}
+{% load django_htmx %}
+
+{% include 'head.html' %}
+
+        
+{% block navbar %}{% endblock %}
+{% if user.is_authenticated %}
+{% include 'sidebar.html' %} 
+{% endif %}
+<main id="main" class="main">
+              
+       
+
+    <section class="section">
+     {% include 'partials/messages.html' %}
+      <div class="row justify-content-center">
+        <div class="col-lg-12">              
+                {% block content %}{% endblock %}
+        </div>
+
+     
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+       
+        <!-- ======= Footer ======= -->
+  {% include 'footer.html' %}
+ 
+
