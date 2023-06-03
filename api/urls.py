@@ -4,5 +4,5 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
-    path('capture/<uuid:key>', views.capture_webhook)
+    path('capture/<uuid:key>', views.capture_webhook, name='capture' )
 ]

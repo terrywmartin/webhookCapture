@@ -44,13 +44,18 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 JWT_SECRET = str(os.getenv('JWT_SECRET'))
 
 #'rest_framework_simplejwt.authentication.JWTAuthentication',
-REST_FRAMEWORK = {
+""" REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
        'rest_framework_simplejwt.authentication.JWTAuthentication',
        'rest_framework.authentication.TokenAuthentication',
        'rest_framework.authentication.BasicAuthentication',
         
     )
+} """
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'UNAUTHENTICATED_USER': None,
 }
 
 SIMPLE_JWT = {

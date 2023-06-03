@@ -1,6 +1,10 @@
 <div class="col-12">
     <label for="formInput" class="form-label">Key</label>
     <div class="input-group has-validation">
-        <input type="text" name="key" class="form-control" id="key" disabled value="{{key}}" >
+        <input type="text" name="key" class="form-control" id="key" readonly="readonly" value="{{key}}" >
+    </div>
+    <label for="formInput" class="form-label">Endpoint URL</label>
+    <div class="input-group has-validation">
+        <input type="text" name="endpoint" class="form-control" id="endpoint" readonly="readonly" value="http://{{settings.APP_URL}}{% url 'api:capture' key %}" >
     </div>
 </div>

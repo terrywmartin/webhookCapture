@@ -13,9 +13,10 @@ import base64
 from webhook.models import Webhook, Credentials, Payload
 
 @api_view(['POST'])
-@authentication_classes([BasicAuthentication,TokenAuthentication])
+# @authentication_classes([BasicAuthentication,TokenAuthentication])
 def capture_webhook(request, key):
     try:
+        print("Captured Webhook")
         webhook = get_object_or_404(Webhook, key=key)
         auth_header = request.META.get('HTTP_AUTHORIZATION')
         if auth_header != None:

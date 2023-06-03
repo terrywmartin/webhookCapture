@@ -10,7 +10,7 @@
             <div class="card">
               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                <form class="col-12"  method="POST" action="{% url 'webhook:edit_webhook' webhook.id %}">
+                <form class="col-12"  method="POST" action="{% url 'webhook:edit_webhook' webhook.id  %}">
                     {% csrf_token %}
                     
                     <div class=" justify-content-center">
@@ -22,7 +22,7 @@
                     </div>
                     <br/>
                      <div id="key">
-                     {% include 'webhook/partials/key.html' %}
+                        {% include 'webhook/partials/key.html' %}
                     </div>
                     <br/>
                     </br>
@@ -35,7 +35,7 @@
                     {% endfor %}
 
                     <div id="token">
-                     {% include 'webhook/partials/token.html' %}
+                      {% include 'webhook/partials/token.html' %}
                     </div>
                     {{webhook.credential__username}}
                     <div class="col-12">

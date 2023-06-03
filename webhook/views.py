@@ -97,18 +97,17 @@ class WebhookEditWebhook(LoginRequiredMixin, View):
                type = request.POST['type']
                username = request.POST['username']
                password = request.POST['password']
-               print(webhook)
+               token = request.POST['token']
+               key = request.POST['key']
+
                webhook.name = name 
-               if webhook.credential.type != type:
-                    if type == 'token':
-                         token = create_jwt(name)
-                         webhook.credential.type = 'token'
-                         webhook.credential.token = token
-               if type == 'basic':
-                    print(username,password)
-                    webhook.credential.username = username
-                    webhook.credential.password = password
-               print(webhook.credential.username)
+               if type == 'token' and token == '':
+                    token = create_jwt(name)
+                    webhook.credential.token = token
+               
+               webhook.credential.username = username
+               webhook.credential.password = password
+               webhook.key = key
                webhook.credential.type = type
                webhook.credential.save()
                webhook.save()
@@ -192,12 +191,12 @@ def get_payload(request, pk):
     return render(request, 'webhook/partials/payload.html', context)
 
 @login_required(login_url='login')
-def create_token(request, name):
+def create_token(request, name, pk=None):
     if request.htmx == False:
             return Http404     
     try:
         token = create_jwt(name)
-
+        
     except:
         messages.error(request, "Error getting data.") 
         context = {
@@ -214,7 +213,7 @@ def create_token(request, name):
     return render(request, 'webhook/partials/token.html', context)
 
 @login_required(login_url='login')
-def create_key(request):
+def create_key(request,pk=None):
      if request.htmx == False:
             return Http404
 
