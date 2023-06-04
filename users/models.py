@@ -6,7 +6,8 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 
-from core.utils import email_user
+#from core.utils import email_user, test_task
+from core.tasks import email_user
 
 import uuid
 
@@ -27,7 +28,10 @@ class User(AbstractUser):
          'token': default_token_generator.make_token(self),
       })
       
-      response = email_user(self.email, html, subject="Activate account")
+      test = ""
+      test = test_task.delay()
+      print(test)
+      response = email_user.delay(self.email, html, subject="Activate account")
 
    def send_password_reset(self):
       

@@ -3,6 +3,9 @@ from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
 
 import os
+from celery import shared_task
+from captureWebhooks.celery import app
+
 
 def get_email_connection():
  use_tls = True
@@ -17,7 +20,7 @@ def get_email_connection():
             fail_silently=fail_silently)
  return connection
 
-
+@shared_task
 def email_user(email_address, html, subject=None):
     print("sending email")
     #email_username = str(os.getenv('EMAIL_USERNAME'))
