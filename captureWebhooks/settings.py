@@ -16,6 +16,7 @@ import os
 import dotenv
 import sys
 
+from celery.schedules import crontab
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -55,6 +56,13 @@ JWT_SECRET = str(os.getenv('JWT_SECRET'))
 
 CELERY_BROKER_URL = str(os.getenv('CELERY_BROKER_URL'))
 CELERY_RESULT_BACKEND = str(os.getenv('CELERY_RESULT_BACKEND'))
+
+CELERY_BEAT_SCHEDULE = {
+    "clean_database": {
+        "task": "webhook.tasks.clean_database",
+        "schedule": crontab(hour=23, minute=0),
+    },
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],

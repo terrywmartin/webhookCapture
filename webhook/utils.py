@@ -29,3 +29,5 @@ def create_jwt(name):
     encoded_jwt = jwt.encode({'webhook': name }, settings.JWT_SECRET, algorithm="HS256")
 
     return encoded_jwt
+
+

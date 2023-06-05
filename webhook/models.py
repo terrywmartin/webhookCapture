@@ -38,3 +38,6 @@ class Payload(models.Model):
 
     webhook = models.ForeignKey(Webhook,null=True,blank=True,on_delete=models.CASCADE,related_name='webhook')
     data = models.JSONField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.data)[1:50]

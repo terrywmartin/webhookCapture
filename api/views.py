@@ -12,45 +12,16 @@ import base64
 
 from webhook.models import Webhook, Credentials, Payload
 
+from .tasks import handle_payload
+
 @api_view(['POST'])
 # @authentication_classes([BasicAuthentication,TokenAuthentication])
 def capture_webhook(request, key):
     try:
-        print("Captured Webhook")
-        webhook = get_object_or_404(Webhook, key=key)
         auth_header = request.META.get('HTTP_AUTHORIZATION')
-        if auth_header != None:
-
-            auth_type=str(auth_header).split(' ')[0]
-            creds = str(auth_header).split(' ')[1]
-
-            if auth_type == 'Basic':
-                creds_decoded = base64.b64decode(creds).decode("ascii")
-                username = creds_decoded.split(':')[0]
-                password = creds_decoded.split(':')[1]                
-                if webhook.credential.type != 'basic':
-                    raise Http404
-                
-                if webhook.credential.username != username or webhook.credential.password != password:
-                    raise Http404
-                
-            elif auth_type == 'Bearer': 
-                token = creds
-
-                if webhook.credential.type != 'token':
-                    raise Http404
-                
-                if webhook.credential.token != token:
-                    raise Http404
-                
-            else:
-                raise Http404
-        else:
-            raise Http404
-        #webhook = Webhook(key=key)
-        #webhook.save()
-        payload = Payload(webhook=webhook, data=request.data)
-        payload.save()
+        if auth_header == None:
+           raise Http404
+        handle_payload(key, auth_header, request.data)
     except:
         resp = { 'status': 404 }
         return Response(resp, status=status.HTTP_404_NOT_FOUND)

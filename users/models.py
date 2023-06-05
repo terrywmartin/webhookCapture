@@ -17,7 +17,7 @@ from core.storage_backends import PublicMediaStorage
 
 class User(AbstractUser):
    id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
-   
+
    def send_activation(self):
 
       html = render_to_string('emails/activate_user.html', {
@@ -28,9 +28,7 @@ class User(AbstractUser):
          'token': default_token_generator.make_token(self),
       })
       
-      test = ""
-      test = test_task.delay()
-      print(test)
+    
       response = email_user.delay(self.email, html, subject="Activate account")
 
    def send_password_reset(self):

@@ -8,5 +8,9 @@ app = Celery('captureWebhooks')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
+app.conf.update(result_expires=3600,
+                enable_utc=True,
+                timezone='US/Central' )
+
 app.autodiscover_tasks()
 

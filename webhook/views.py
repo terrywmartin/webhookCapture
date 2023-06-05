@@ -12,6 +12,7 @@ from .models import Webhook, Credentials, Payload
 from .forms import WebhookModelForm, CredentialModelForm
 from .utils import create_jwt
 
+
 # Create your views here.
 
 class WebhookViewWebhooks(LoginRequiredMixin, View):
@@ -89,8 +90,7 @@ class WebhookEditWebhook(LoginRequiredMixin, View):
           return render(request, 'webhook/edit_webhook.html', context)
      
      def post(self, request, pk):
-          print(request.POST)
-          print(pk)
+         
           try:     
                webhook = Webhook.objects.get(id=pk, user=request.user)
                name = request.POST['name']

@@ -12,6 +12,9 @@ from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth import logout
+
+from webhook.tasks import delete_payloads
 
 from .models import User, UserProfile
 from .forms import RegisterUserForm, UserModelForm, UserProfileModelForm
@@ -163,6 +166,18 @@ class UsersViewProfile(View):
         }
         return render(request, 'users/profile.html', context)
 
+@login_required
+def custom_logout(request):
+    user = request.user
+    next = request.GET.get('next', None)
+    delete_payloads.delay(user.id)
+    logout(request)
+
+    if next != None:
+        return redirect(next)
+    else:
+        return redirect('core:index')
+    
 @login_required(login_url='login')
 def get_profile(request, pk):
     if request.htmx == False:
