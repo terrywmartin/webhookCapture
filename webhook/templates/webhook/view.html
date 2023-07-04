@@ -3,7 +3,7 @@
 {% block content %}
 
     <section class="section profile">
-    {% if request.user.is_authenticated == false %}
+    {% if !request.user.is_authenticated  %}
     <div class="alert alert-info" ><h5>This is a simulation.  Json messages with fake data will populate every 10 seconds.  Click on the json message to view.</h5></div>
     {% endif %}
     <div class="row">
