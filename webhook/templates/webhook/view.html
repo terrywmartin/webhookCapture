@@ -5,6 +5,8 @@
     <section class="section profile">
     {% if not request.user.is_authenticated  %}
     <div class="alert alert-info" ><h5>This is a simulation.  Json messages with fake data will populate every 10 seconds.  Click on the json message to view.</h5></div>
+    {% else %}
+    <div class="alert alert-danger" ><h5>THIS IS FOR TROUBLESHOOTING AND TESTING PURPOSES ONLY.  DO NOT USE FOR LIVE OR SENSITIVE DATA. ALL DATA WILL BE ERASED WHEN YOU LOG OUT.</h5></div>
     {% endif %}
     <div class="row">
 
