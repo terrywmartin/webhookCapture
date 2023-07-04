@@ -25,7 +25,8 @@
                   {% else %}
                   <div class="d-flex align-items-center" id="webhooks" hx-target="#webhooks" hx-get="{% url 'webhook:simulate_payloads'%}" hx-trigger="every 10s" hx-swap="afterend">
                   {% endif %}
-                   {% include 'webhook/partials/payloads.html' with payloads=payloads%}
+                    <a hx-get="{% url 'webhook:simulate_payloads' %}" hx-target="#webhooks" hx-swap="afterend" class="btn btn-primary btn-block mb-4"> Load</a>
+                    {% include 'webhook/partials/payloads.html' with payloads=payloads%}
                   </div>
                 </div>
 
