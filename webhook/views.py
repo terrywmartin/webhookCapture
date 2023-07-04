@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.conf import settings
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.http import Http404
 
 import uuid
+import os
+import random
 
 from .models import Webhook, Credentials, Payload
 from .forms import WebhookModelForm, CredentialModelForm
@@ -149,6 +151,23 @@ class WebhookCapture(View):
           }
 
           return render(request, 'webhook/view.html', context)
+     
+class WebhookStartDemo(View):
+    
+     def get(self,request):
+          if request.user.is_authenticated:
+               return redirect('core:index')
+          
+          key = os.getenv("DEMO_WEBHOOK",None)
+          if key == None:
+               return redirect('core:index')
+          
+          context = {
+               'key': key,
+               'payloads': None,
+          }
+
+          return render(request, 'webhook/view.html', context)
     
     
 @login_required(login_url='login') 
@@ -170,6 +189,47 @@ def get_payloads(request, key):
 
 @login_required(login_url='login')
 def get_payload(request, pk):
+    if request.htmx == False:
+            return Http404
+
+    try:
+        payload = Payload.objects.get(id=pk)
+
+    except:
+        messages.error(request, "Error getting data.") 
+        context = {
+             'data': None
+        }
+        return render(request,'webhook/partials/payload.html', context)
+    
+   
+    context = {
+         'data': payload.data
+    }
+
+    return render(request, 'webhook/partials/payload.html', context)
+
+def simulate_payloads(request):
+     if request.htmx == False:
+            return Http404
+    
+     key = settings.DEMO_WEBHOOK
+     print(key)
+     payloads = Payload.objects.filter(webhook__id=key).values('id','data')
+    
+     for payload in payloads:
+            payload['preview'] = str(payload['data'])[0:100] 
+
+     random_payload = random.choice(payloads)
+    
+     context = {
+        'key': key,
+        'payloads': [random_payload]
+     }
+
+     return render(request, 'webhook/partials/payloads.html', context)
+
+def get_simulated_payload(request, pk):
     if request.htmx == False:
             return Http404
 

@@ -3,6 +3,7 @@
 {% block content %}
 
     <section class="section profile">
+    <div class="alert alert-info" ><h5>This is a simulation.  Json messages with fake data will populate every 10 seconds.  Click on the json message to view.</h5></div>
     <div class="row">
 
         <!-- Left side columns -->
@@ -15,8 +16,11 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Webhooks</h5>
-
+                  {% if request.user.is_authenticated %}
                   <div class="d-flex align-items-center" id="webhooks" hx-target="#webhooks" hx-get="{% url 'webhook:get_payloads' key %}" hx-trigger="every 10s" hx-swap="innerHTML">
+                  {% else %}
+                  <div class="d-flex align-items-center" id="webhooks" hx-target="#webhooks" hx-get="{% url 'webhook:simulate_payloads'%}" hx-trigger="every 10s" hx-swap="afterend">
+                  {% endif %}
                    {% include 'webhook/partials/payloads.html' with payloads=payloads%}
                   </div>
                 </div>

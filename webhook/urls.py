@@ -9,6 +9,11 @@ urlpatterns = [
     path('capture/<uuid:key>/', views.WebhookCapture.as_view(), name='capture'),
     path('payloads/<uuid:key>', views.get_payloads, name='get_payloads'),
     path('payload/<uuid:pk>', views.get_payload, name='get_payload'),
+    path('payload/demo', views.simulate_payloads, name='simulate_payloads'),
+    path('payload/demo/<uuid:pk>', views.get_simulated_payload, name='get_simulated_payload'),
+
+
+    path('demo/', views.WebhookStartDemo.as_view(), name='demo'),
 
     path('', views.WebhookViewWebhooks.as_view(), name='view_webhooks'),
     #path('<uuid:pk>/', views.WebhookViewWebhook.as_view(), name='view_webhook'),

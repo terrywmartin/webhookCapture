@@ -72,6 +72,9 @@
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
         {% else %}
+        <li class ="nav-item pe-3">
+            <a class="nav-link" href="{% url 'webhook:demo' %}"><i class="fa-solid fa-cloud-binary"></i> Demo</a>
+          </li>
          <li class ="nav-item pe-3">
             <a class="nav-link" href="{% url 'users:user_register' %}?next={% url 'core:index' %}"><i class="bi bi-pencil-square"></i> Register</a>
           </li>

@@ -2,8 +2,14 @@
     
     <div class="news">
     {% for payload in payloads %}
+    {% if request.user.is_authenticated %}
         <div class="post-item clearfix" hx-get="{% url 'webhook:get_payload' payload.id %}" hx-trigger="click" hx-target="#data">
+    {% else %}
+        <div class="post-item clearfix" hx-get="{% url 'webhook:get_simulated_payload' payload.id %}" hx-trigger="click" hx-target="#data">
+    {% endif %}
+
             <p>{{payload.preview}}</p>
         </div>
     {% endfor %}
     </div>
+    
